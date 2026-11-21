@@ -19,3 +19,10 @@ npm run dev
 Build a static site into `dist/` with `npm run build`.
 
 Rename the app in `src/config.ts`.
+
+## Install as an app
+The site is published to GitHub Pages by `.github/workflows/deploy.yml` on every push to `main`.
+Open the site in Chrome or Edge and click the install icon in the address bar
+(on a Mac in Safari: File → Add to Dock). Once installed it opens in its own window and works offline.
+
+One-time setup: in the repo's **Settings → Pages**, set **Source** to **GitHub Actions**.
