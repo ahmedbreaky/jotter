@@ -13,6 +13,7 @@ export default function App() {
   const [searchOpen, setSearchOpen] = useState(false);
   const [sideOpen, setSideOpen] = useState(false);
   const [iconOpen, setIconOpen] = useState(false);
+  const [confirmDel, setConfirmDel] = useState<string | null>(null);
   const page = ws.currentId ? ws.pages[ws.currentId] : undefined;
 
   useEffect(() => {
@@ -84,16 +85,20 @@ export default function App() {
               >
                 {page.favorite ? "★" : "☆"}
               </button>
-              <button
-                className="danger-ghost"
-                title="Delete page"
-                onClick={() => {
-                  const n = countDescendants(page.id);
-                  if (confirm(n ? `Delete this page and ${n} page(s) inside it?` : "Delete this page?")) remove(page.id);
-                }}
-              >
-                🗑
-              </button>
+              {confirmDel === page.id ? (
+                <button
+                  className="confirm-del"
+                  onClick={() => { remove(page.id); setConfirmDel(null); }}
+                  onBlur={() => setConfirmDel(null)}
+                  autoFocus
+                >
+                  {countDescendants(page.id) ? `Delete with ${countDescendants(page.id)} inside?` : "Delete page?"}
+                </button>
+              ) : (
+                <button className="danger-ghost" title="Delete page" onClick={() => setConfirmDel(page.id)}>
+                  🗑
+                </button>
+              )}
             </div>
           )}
         </header>

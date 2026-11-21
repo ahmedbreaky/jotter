@@ -258,3 +258,7 @@ table.db { border-collapse: collapse; width: max-content; min-width: 100%; font-
   .icon-picker { grid-template-columns: repeat(6, 36px); top: 58px; }
   .crumb { max-width: 120px; }
 }
+.top-actions .confirm-del {
+  width: auto; padding: 0 10px; font-size: 13px; color: var(--accent-text); background: var(--danger); white-space: nowrap;
+}
+.top-actions .confirm-del:hover { background: var(--danger); }
