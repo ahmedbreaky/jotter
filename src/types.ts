@@ -1,6 +1,6 @@
 import type { JSONContent } from "@tiptap/react";
 
-export type ColumnType = "text" | "number" | "select" | "date" | "checkbox";
+export type ColumnType = "text" | "number" | "select" | "multi_select" | "date" | "checkbox" | "url";
 
 export interface Column {
   id: string;
@@ -9,7 +9,7 @@ export interface Column {
   options?: string[];
 }
 
-export type CellValue = string | number | boolean | null;
+export type CellValue = string | number | boolean | string[] | null;
 
 export interface Row {
   id: string;
@@ -21,6 +21,17 @@ export interface TableData {
   rows: Row[];
   sort?: { columnId: string; dir: "asc" | "desc" } | null;
   filter?: string;
+  view?: "table" | "board";
+  groupBy?: string | null; // select column used to group the board
+  calcs?: Record<string, CalcKind>;
+}
+
+export type CalcKind = "none" | "count" | "filled" | "sum" | "avg" | "min" | "max" | "checked";
+
+export interface PageStyle {
+  font: "sans" | "serif" | "mono";
+  small: boolean;
+  full: boolean;
 }
 
 export interface Page {
@@ -31,6 +42,7 @@ export interface Page {
   kind: "doc" | "table";
   content: JSONContent | null;
   table: TableData | null;
+  style?: PageStyle;
   favorite: boolean;
   expanded: boolean;
   createdAt: number;

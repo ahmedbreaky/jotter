@@ -5,6 +5,7 @@ import { Sidebar } from "./components/Sidebar";
 import { Editor } from "./components/Editor";
 import { TableView } from "./components/TableView";
 import { SearchModal } from "./components/SearchModal";
+import { StyleMenu, DEFAULT_STYLE } from "./components/StyleMenu";
 
 const ICONS = ["📄", "📝", "📚", "✅", "🗂️", "💡", "🎯", "📌", "🚀", "🧠", "🌱", "📅", "🏠", "💼", "🎨", "🔖"];
 
@@ -78,6 +79,10 @@ export default function App() {
           </div>
           {page && (
             <div className="top-actions">
+              <StyleMenu
+                style={page.style ?? DEFAULT_STYLE}
+                onChange={(st) => update(page.id, { style: st })}
+              />
               <button
                 className={page.favorite ? "fav on" : "fav"}
                 title={page.favorite ? "Remove from favorites" : "Add to favorites"}
@@ -104,7 +109,10 @@ export default function App() {
         </header>
 
         {page ? (
-          <article className={`page ${page.kind === "table" ? "wide" : ""}`} key={page.id}>
+          <article
+            className={`page font-${(page.style ?? DEFAULT_STYLE).font} ${(page.style ?? DEFAULT_STYLE).small ? "small" : ""} ${page.kind === "table" || (page.style ?? DEFAULT_STYLE).full ? "wide" : ""}`}
+            key={page.id}
+          >
             <div className="icon-wrap">
               <button className="page-icon" onClick={() => setIconOpen((o) => !o)} aria-label="Change icon">
                 {page.icon}

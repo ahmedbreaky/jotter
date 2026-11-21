@@ -7,7 +7,12 @@ A block-based notes and wiki app that runs entirely in your browser. Pages are s
 - Markdown shortcuts (`# `, `- `, `1. `, `[] `, `> `, ``` ``` ```), bold and italic with Ctrl/⌘+B and Ctrl/⌘+I
 - Move the current block up or down with Alt+Shift+↑/↓
 - Nested pages in a sidebar tree, favourites, page icons and breadcrumbs
-- Table pages with typed columns (text, number, select, date, checkbox), sorting and filtering
+- Text formatting: select text for bold, italic, underline, strikethrough, inline code, links,
+  text colors, highlights and alignment
+- Page style: Default, Serif or Mono font, small text and full width, set per page
+- Databases with Table and Board views; column types text, number, select, multi-select, date,
+  checkbox and link; sorting, filtering, footer calculations (count, sum, average, min, max, checked)
+  and column reordering; drag cards between board columns
 - Search across titles and content (Ctrl/⌘+K)
 - Light, dark and system themes; works on phones
 

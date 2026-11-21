@@ -5,6 +5,13 @@ import TaskList from "@tiptap/extension-task-list";
 import TaskItem from "@tiptap/extension-task-item";
 import Placeholder from "@tiptap/extension-placeholder";
 import { TextSelection } from "@tiptap/pm/state";
+import Underline from "@tiptap/extension-underline";
+import TextStyle from "@tiptap/extension-text-style";
+import Color from "@tiptap/extension-color";
+import Highlight from "@tiptap/extension-highlight";
+import Link from "@tiptap/extension-link";
+import TextAlign from "@tiptap/extension-text-align";
+import { FormatBar } from "./FormatBar";
 
 interface SlashItem {
   label: string;
@@ -86,10 +93,25 @@ export function Editor({ pageId, content, onChange }: { pageId: string; content:
         placeholder: ({ node }) => (node.type.name === "heading" ? "Heading" : "Type '/' for commands"),
       }),
       MoveBlock,
+      Underline,
+      TextStyle,
+      Color,
+      Highlight.configure({ multicolor: true }),
+      Link.configure({ openOnClick: false, autolink: true, HTMLAttributes: { rel: "noopener noreferrer", target: "_blank" } }),
+      TextAlign.configure({ types: ["heading", "paragraph"] }),
     ],
     content: content ?? { type: "doc", content: [{ type: "paragraph" }] },
     editorProps: {
       attributes: { class: "prose", spellcheck: "true" },
+      // Ctrl/Cmd + click opens a link in a new tab; a plain click edits it.
+      handleClick: (_view, _pos, event) => {
+        const a = (event.target as HTMLElement).closest("a");
+        if (a && (event.ctrlKey || event.metaKey)) {
+          window.open(a.href, "_blank", "noopener");
+          return true;
+        }
+        return false;
+      },
       handleKeyDown: (_view, event) => {
         const m = menuRef.current;
         if (!m.open) return false;
@@ -168,6 +190,7 @@ export function Editor({ pageId, content, onChange }: { pageId: string; content:
 
   return (
     <>
+      {editor && <FormatBar editor={editor} />}
       <EditorContent editor={editor} />
       {menu.open && filtered.length > 0 && (
         <div className="slash" style={{ left: Math.max(8, left), top }} role="listbox">

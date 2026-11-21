@@ -26,20 +26,27 @@ function newPage(partial: Partial<Page> = {}): Page {
 }
 
 export function defaultTable(): TableData {
-  const name = uid(), status = uid(), due = uid(), done = uid();
+  const name = uid(), status = uid(), tags = uid(), pts = uid(), due = uid(), link = uid(), done = uid();
   return {
     columns: [
       { id: name, name: "Name", type: "text" },
       { id: status, name: "Status", type: "select", options: ["Not started", "In progress", "Done"] },
+      { id: tags, name: "Tags", type: "multi_select", options: ["Design", "Writing", "Research", "Urgent"] },
+      { id: pts, name: "Hours", type: "number" },
       { id: due, name: "Due", type: "date" },
-      { id: done, name: "Done", type: "checkbox" },
+      { id: link, name: "Link", type: "url" },
+      { id: done, name: "Reviewed", type: "checkbox" },
     ],
     rows: [
-      { id: uid(), cells: { [name]: "First task", [status]: "In progress", [due]: "", [done]: false } },
-      { id: uid(), cells: { [name]: "Second task", [status]: "Not started", [due]: "", [done]: false } },
+      { id: uid(), cells: { [name]: "Example: draft outline", [status]: "Done", [tags]: ["Writing"], [pts]: 2, [due]: "", [link]: "", [done]: true } },
+      { id: uid(), cells: { [name]: "Example: collect sources", [status]: "In progress", [tags]: ["Research", "Urgent"], [pts]: 3, [due]: "", [link]: "", [done]: false } },
+      { id: uid(), cells: { [name]: "Example: sketch cover", [status]: "Not started", [tags]: ["Design"], [pts]: 1.5, [due]: "", [link]: "", [done]: false } },
     ],
     sort: null,
     filter: "",
+    view: "table",
+    groupBy: status,
+    calcs: { [name]: "count", [pts]: "sum", [done]: "checked" },
   };
 }
 
